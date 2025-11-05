@@ -74,7 +74,7 @@ const tournaments = [
         venue: '서울 월드 아레나',
         status: 'completed',
         stage: 'Quarterfinal · Match 1',
-        broadcast: '월드 챔피언십 · 스쿼드',
+        broadcast: '월드 챔피언십 메인 중계',
         teams: [
           {
             id: 't1',
@@ -94,7 +94,7 @@ const tournaments = [
         venue: '서울 월드 아레나',
         status: 'completed',
         stage: 'Quarterfinal · Match 2',
-        broadcast: '월드 챔피언십 · 스쿼드',
+        broadcast: '월드 챔피언십 메인 중계',
         teams: [
           {
             id: 'geng',
@@ -114,7 +114,7 @@ const tournaments = [
         venue: '고척 스카이돔',
         status: 'upcoming',
         stage: 'Semifinal · Upper Bracket',
-        broadcast: '5전 3선승제',
+        broadcast: 'Best of 5',
         teams: [
           {
             id: 't1',
@@ -132,7 +132,7 @@ const tournaments = [
         venue: '고척 스카이돔',
         status: 'live',
         stage: 'Semifinal · Lower Bracket',
-        broadcast: '5전 3선승제',
+        broadcast: 'Best of 5',
         teams: [
           {
             id: 'dk',
@@ -250,7 +250,6 @@ const formatTime = (value) => {
     hour12: false,
     timeZone: 'Asia/Seoul'
   });
-
   return formatter.format(toDate(value)).replace(/\./g, ':').replace(/:\s?/g, ':');
 };
 
@@ -289,9 +288,7 @@ const scoreLabel = (teams) => {
 const resolveTeam = (id) => teamCatalog[id] ?? { name: id.toUpperCase(), logo: '', region: '' };
 
 const setBannerDate = () => {
-  if (!bannerElement) {
-    return;
-  }
+  if (!bannerElement) return;
 
   const now = new Date('2025-11-10T12:00:00+09:00');
   const formatter = new Intl.DateTimeFormat('ko-KR', {
@@ -308,60 +305,56 @@ const setBannerDate = () => {
     .replace(/\s/g, '')
     .split('(');
 
-  const dayNode = bannerElement.querySelector('.banner-day');
-  const focusNode = bannerElement.querySelector('.banner-focus');
+  const dayNode = bannerElement.querySelector('.masthead__day');
+  const focusNode = bannerElement.querySelector('.masthead__focus');
 
   if (dayNode) {
     dayNode.textContent = datePart ?? '2025.11.10';
   }
 
   if (focusNode) {
-    focusNode.textContent = `${weekday?.replace(')', '') ?? '월요일'} 주요 일정`;
+    focusNode.textContent = `${weekday?.replace(')', '') ?? '월요일'} 하이라이트`;
   }
 };
 
 const collapseAll = (exclude) => {
-  document.querySelectorAll('.match-card').forEach((card) => {
-    if (exclude && card === exclude) {
-      return;
-    }
+  document.querySelectorAll('.matchcard').forEach((card) => {
+    if (exclude && card === exclude) return;
 
-    const trigger = card.querySelector('.match-trigger');
-    const drawer = card.querySelector('.roster-drawer');
+    const trigger = card.querySelector('.matchcard__trigger');
+    const drawer = card.querySelector('.matchcard__roster');
 
     if (trigger && drawer && trigger.getAttribute('aria-expanded') === 'true') {
       trigger.setAttribute('aria-expanded', 'false');
       drawer.hidden = true;
+      card.classList.remove('is-open');
     }
   });
 };
 
 const buildRoster = (teams, template) => {
   const wrapper = document.createElement('div');
-  wrapper.className = 'roster-columns';
+  wrapper.className = 'roster';
 
   teams.forEach((team) => {
     const rosterFragment = template.content.cloneNode(true);
-    const article = rosterFragment.querySelector('.roster-team');
-
-    if (!article) {
-      return;
-    }
+    const article = rosterFragment.querySelector('.roster__team');
+    if (!article) return;
 
     const info = resolveTeam(team.id);
-    const name = article.querySelector('.roster-name');
-    const label = article.querySelector('.roster-label');
-    const list = article.querySelector('.roster-list');
+    const name = article.querySelector('.roster__name');
+    const note = article.querySelector('.roster__note');
+    const list = article.querySelector('.roster__list');
 
     if (name) {
       name.textContent = info.name;
     }
 
-    if (label) {
+    if (note) {
       const segments = [];
       if (info.region) segments.push(info.region);
       if (typeof team.score === 'number') segments.push(`${team.score}점`);
-      label.textContent = segments.join(' · ');
+      note.textContent = segments.join(' · ');
     }
 
     if (list) {
@@ -379,12 +372,10 @@ const buildRoster = (teams, template) => {
 };
 
 const attachToggle = (card) => {
-  const trigger = card.querySelector('.match-trigger');
-  const drawer = card.querySelector('.roster-drawer');
+  const trigger = card.querySelector('.matchcard__trigger');
+  const drawer = card.querySelector('.matchcard__roster');
 
-  if (!trigger || !drawer) {
-    return;
-  }
+  if (!trigger || !drawer) return;
 
   trigger.addEventListener('click', () => {
     const expanded = trigger.getAttribute('aria-expanded') === 'true';
@@ -392,93 +383,81 @@ const attachToggle = (card) => {
     if (expanded) {
       trigger.setAttribute('aria-expanded', 'false');
       drawer.hidden = true;
+      card.classList.remove('is-open');
       return;
     }
 
     collapseAll(card);
     trigger.setAttribute('aria-expanded', 'true');
     drawer.hidden = false;
+    card.classList.add('is-open');
     drawer.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 };
 
 const populateMatch = (match, template, rosterTemplate) => {
   const fragment = template.content.cloneNode(true);
-  const entry = fragment.querySelector('.match-entry');
-  const card = fragment.querySelector('.match-card');
+  const entry = fragment.querySelector('.match');
+  const card = fragment.querySelector('.matchcard');
+  if (!entry || !card) return null;
 
-  if (!entry || !card) {
-    return null;
-  }
-
-  const trigger = card.querySelector('.match-trigger');
-  const timeEl = card.querySelector('.card-clock');
-  const dateEl = card.querySelector('.card-date');
-  const statusEl = card.querySelector('.card-status');
-  const venueEl = card.querySelector('.card-venue');
-  const scoreEl = card.querySelector('.score-ribbon');
-  const drawer = card.querySelector('.roster-drawer');
+  const trigger = card.querySelector('.matchcard__trigger');
+  const timeEl = card.querySelector('.matchcard__clock');
+  const dateEl = card.querySelector('.matchcard__date');
+  const statusEl = card.querySelector('.matchcard__status');
+  const detailsEl = card.querySelector('.matchcard__details');
+  const scoreEl = card.querySelector('.matchcard__score');
+  const drawer = card.querySelector('.matchcard__roster');
 
   if (trigger) {
     trigger.dataset.matchId = match.id;
   }
 
-  if (timeEl) {
-    timeEl.textContent = formatTime(match.datetime);
-  }
-
-  if (dateEl) {
-    dateEl.textContent = formatDate(match.datetime);
-  }
+  if (timeEl) timeEl.textContent = formatTime(match.datetime);
+  if (dateEl) dateEl.textContent = formatDate(match.datetime);
 
   if (statusEl) {
     statusEl.textContent = statusLabel(match.status);
     statusEl.dataset.status = match.status;
   }
 
-  if (venueEl) {
+  if (detailsEl) {
     const fragments = [match.stage, match.broadcast, match.venue].filter(Boolean);
-    venueEl.textContent = fragments.join(' · ');
+    detailsEl.textContent = fragments.join(' · ');
   }
 
-  if (scoreEl) {
-    scoreEl.textContent = scoreLabel(match.teams);
-  }
+  if (scoreEl) scoreEl.textContent = scoreLabel(match.teams);
 
   const [homeTeam, awayTeam] = match.teams.map((team) => ({
     ...team,
     info: resolveTeam(team.id)
   }));
 
-  const homeNode = card.querySelector('.team-row[data-side="home"]');
-  const awayNode = card.querySelector('.team-row[data-side="away"]');
+  const homeNode = card.querySelector('.matchcard__team[data-side="home"]');
+  const awayNode = card.querySelector('.matchcard__team[data-side="away"]');
 
   if (homeNode) {
     const img = homeNode.querySelector('img');
-    const label = homeNode.querySelector('.team-name');
+    const label = homeNode.querySelector('.matchcard__name');
     if (img) {
       img.src = homeTeam.info.logo;
       img.alt = `${homeTeam.info.name} 로고`;
-      img.width = 42;
-      img.height = 42;
+      img.width = 46;
+      img.height = 46;
     }
-    if (label) {
-      label.textContent = homeTeam.info.name;
-    }
+    if (label) label.textContent = homeTeam.info.name;
   }
 
   if (awayNode) {
     const img = awayNode.querySelector('img');
-    const label = awayNode.querySelector('.team-name');
+    const label = awayNode.querySelector('.matchcard__name');
     if (img) {
       img.src = awayTeam.info.logo;
       img.alt = `${awayTeam.info.name} 로고`;
-      img.width = 42;
-      img.height = 42;
+      img.width = 46;
+      img.height = 46;
     }
-    if (label) {
-      label.textContent = awayTeam.info.name;
-    }
+    if (label) label.textContent = awayTeam.info.name;
   }
 
   if (drawer && rosterTemplate) {
@@ -504,9 +483,7 @@ const renderMatches = (target, matches, matchTemplate, rosterTemplate) => {
 };
 
 const renderTournaments = () => {
-  if (!boardElement) {
-    return;
-  }
+  if (!boardElement) return;
 
   const tournamentTemplate = document.getElementById('tournament-template');
   const matchTemplate = document.getElementById('match-template');
@@ -524,34 +501,27 @@ const renderTournaments = () => {
 
   tournaments.forEach((tournament) => {
     const fragment = tournamentTemplate.content.cloneNode(true);
-    const block = fragment.querySelector('.tournament-block');
-
-    if (!block) {
-      return;
-    }
+    const block = fragment.querySelector('.tournament');
+    if (!block) return;
 
     block.id = tournament.id;
-    const tag = block.querySelector('.block-tag');
-    const title = block.querySelector('.block-title');
-    const stage = block.querySelector('.block-stage');
+
+    const tag = block.querySelector('.tournament__tag');
+    const title = block.querySelector('.tournament__title');
+    const stage = block.querySelector('.tournament__stage');
     const list = block.querySelector('[data-match-list]');
 
     if (tag) tag.textContent = tournament.tag;
     if (title) title.textContent = tournament.title;
     if (stage) stage.textContent = tournament.stage;
-
-    if (list) {
-      renderMatches(list, tournament.matches, matchTemplate, rosterTemplate);
-    }
+    if (list) renderMatches(list, tournament.matches, matchTemplate, rosterTemplate);
 
     boardElement.appendChild(fragment);
   });
 };
 
 const renderNav = () => {
-  if (!navList) {
-    return;
-  }
+  if (!navList) return;
 
   navList.innerHTML = '';
   tournaments.forEach((tournament, index) => {
@@ -559,37 +529,30 @@ const renderNav = () => {
     const link = document.createElement('a');
     link.href = `#${tournament.id}`;
     link.textContent = tournament.tag;
-    link.className = 'rail-link';
-    if (index === 0) {
-      link.classList.add('is-active');
-    }
+    link.className = 'rail__link';
+    if (index === 0) link.classList.add('is-active');
+
     link.addEventListener('click', () => {
-      navList.querySelectorAll('.rail-link').forEach((anchor) => anchor.classList.remove('is-active'));
+      navList.querySelectorAll('.rail__link').forEach((anchor) => anchor.classList.remove('is-active'));
       link.classList.add('is-active');
     });
+
     item.appendChild(link);
     navList.appendChild(item);
   });
 };
 
 const initObserver = () => {
-  if (!navList) {
-    return;
-  }
+  if (!navList) return;
 
-  const anchors = Array.from(navList.querySelectorAll('.rail-link'));
-  const sections = document.querySelectorAll('.tournament-block');
-
-  if (!anchors.length || !sections.length) {
-    return;
-  }
+  const anchors = Array.from(navList.querySelectorAll('.rail__link'));
+  const sections = document.querySelectorAll('.tournament');
+  if (!anchors.length || !sections.length) return;
 
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
+        if (!entry.isIntersecting) return;
 
         anchors.forEach((anchor) => {
           if (anchor.hash === `#${entry.target.id}`) {
@@ -607,36 +570,29 @@ const initObserver = () => {
 };
 
 const bindControls = () => {
-  const allMatches = Array.from(document.querySelectorAll('.match-card'));
-  if (!allMatches.length) {
-    return;
-  }
+  const allCards = Array.from(document.querySelectorAll('.matchcard'));
+  if (!allCards.length) return;
 
-  const todayMatch = allMatches.find((card) => {
-    const time = card.querySelector('.card-date');
-    if (!time) return false;
-    return time.textContent?.includes('11.10');
+  const todayCard = allCards.find((card) => {
+    const date = card.querySelector('.matchcard__date');
+    return date?.textContent?.includes('11.10');
   });
 
-  const liveMatch = allMatches.find((card) => card.querySelector('.card-status[data-status="live"]'));
-
-  const upcomingMatch = allMatches.find((card) => {
-    const status = card.querySelector('.card-status');
-    return status?.dataset.status === 'upcoming';
-  });
+  const liveCard = allCards.find((card) => card.querySelector('.matchcard__status[data-status="live"]'));
+  const upcomingCard = allCards.find((card) => card.querySelector('.matchcard__status[data-status="upcoming"]'));
 
   controlButtons.forEach((button) => {
     button.addEventListener('click', () => {
-      const mode = button.dataset.scroll;
-      if (mode === 'live' && liveMatch) {
-        liveMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        liveMatch.querySelector('.match-trigger')?.focus();
-      } else if (mode === 'upcoming' && upcomingMatch) {
-        upcomingMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        upcomingMatch.querySelector('.match-trigger')?.focus();
-      } else if (mode === 'today' && todayMatch) {
-        todayMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        todayMatch.querySelector('.match-trigger')?.focus();
+      const target = button.dataset.scroll;
+      if (target === 'live' && liveCard) {
+        liveCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        liveCard.querySelector('.matchcard__trigger')?.focus();
+      } else if (target === 'today' && todayCard) {
+        todayCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        todayCard.querySelector('.matchcard__trigger')?.focus();
+      } else if (target === 'upcoming' && upcomingCard) {
+        upcomingCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        upcomingCard.querySelector('.matchcard__trigger')?.focus();
       }
     });
   });
