@@ -1,1 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LCK Archive · 2025년 11월 경기 보드</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <header class="masthead" aria-live="polite">
+        <div class="masthead__grid">
+          <div class="masthead__brand">
+            <span class="masthead__badge">LCK ARCHIVE</span>
+            <h1 class="masthead__title">2025년 11월 현재 진행 중</h1>
+            <p class="masthead__lede">
+              국제 무대부터 프리시즌 쇼케이스까지, 지금 확인해야 할 경기만 골라 제공합니다.
+            </p>
+          </div>
+          <div class="masthead__meta" data-date-banner>
+            <span class="masthead__day">2025.11.10</span>
+            <strong class="masthead__focus">월요일 하이라이트</strong>
+          </div>
+          <div class="masthead__actions">
+            <button type="button" data-scroll="live" class="masthead__action">LIVE</button>
+            <button type="button" data-scroll="today" class="masthead__action">오늘 경기</button>
+            <button type="button" data-scroll="upcoming" class="masthead__action">다가오는 경기</button>
+          </div>
+        </div>
+      </header>
 
+      <main class="board">
+        <nav class="board__rail" aria-label="대회 카테고리">
+          <h2 class="rail__heading">대회</h2>
+          <ul class="rail__list" data-tournament-nav></ul>
+        </nav>
+        <section class="board__content" data-schedule-board aria-live="polite">
+          <noscript>
+            <p class="board__noscript">자바스크립트가 꺼져 있습니다. 최신 경기 데이터는 활성화 후 확인하세요.</p>
+          </noscript>
+        </section>
+      </main>
+    </div>
+
+    <template id="tournament-template">
+      <section class="tournament" data-tournament>
+        <header class="tournament__header">
+          <div class="tournament__meta">
+            <span class="tournament__tag"></span>
+            <h3 class="tournament__title"></h3>
+          </div>
+          <p class="tournament__stage"></p>
+        </header>
+        <ul class="matchlist" data-match-list></ul>
+      </section>
+    </template>
+
+    <template id="match-template">
+      <li class="match">
+        <article class="matchcard">
+          <button type="button" class="matchcard__trigger" aria-expanded="false">
+            <span class="matchcard__time">
+              <strong class="matchcard__clock"></strong>
+              <span class="matchcard__date"></span>
+            </span>
+            <span class="matchcard__teams">
+              <span class="matchcard__team" data-side="home">
+                <img alt="" loading="lazy" />
+                <span class="matchcard__name"></span>
+              </span>
+              <span class="matchcard__score"></span>
+              <span class="matchcard__team" data-side="away">
+                <img alt="" loading="lazy" />
+                <span class="matchcard__name"></span>
+              </span>
+            </span>
+            <span class="matchcard__meta">
+              <span class="matchcard__status"></span>
+              <span class="matchcard__details"></span>
+            </span>
+          </button>
+          <div class="matchcard__roster" hidden>
+            <div class="roster" data-roster></div>
+          </div>
+        </article>
+      </li>
+    </template>
+
+    <template id="roster-template">
+      <article class="roster__team">
+        <header>
+          <strong class="roster__name"></strong>
+          <span class="roster__note"></span>
+        </header>
+        <ul class="roster__list"></ul>
+      </article>
+    </template>
+
+    <script type="module" src="scripts/main.js"></script>
+  </body>
+</html>
