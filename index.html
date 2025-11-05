@@ -1,1 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LCK Archive · 2025년 11월 경기 일정</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header" aria-live="polite">
+        <div class="banner-meta">
+          <span class="banner-label">금일</span>
+          <p class="banner-copy">국제·프리시즌 일정을 한곳에서 추적하세요</p>
+        </div>
+        <div class="banner-date" data-date-banner>
+          <span class="banner-day">2025년 11월</span>
+          <strong class="banner-focus">현재 진행 중인 경기</strong>
+        </div>
+        <div class="banner-controls">
+          <button type="button" class="control-btn" data-scroll="today">오늘 경기</button>
+          <button type="button" class="control-btn" data-scroll="live">LIVE</button>
+          <button type="button" class="control-btn" data-scroll="upcoming">다가오는 경기</button>
+        </div>
+      </header>
+      <main class="app-main">
+        <aside class="category-rail" aria-label="대회 범주">
+          <h2 class="rail-heading">TOURNAMENTS</h2>
+          <ul class="rail-list" data-tournament-nav></ul>
+        </aside>
+        <section class="schedule-feed" data-schedule-board aria-live="polite">
+          <noscript>
+            <p class="noscript">자바스크립트를 활성화하면 최신 경기 일정과 로스터가 표시됩니다.</p>
+          </noscript>
+        </section>
+      </main>
+    </div>
 
+    <template id="tournament-template">
+      <section class="tournament-block">
+        <header class="block-header">
+          <div class="block-meta">
+            <span class="block-tag"></span>
+            <h3 class="block-title"></h3>
+          </div>
+          <p class="block-stage"></p>
+        </header>
+        <ul class="match-stack" data-match-list></ul>
+      </section>
+    </template>
+
+    <template id="match-template">
+      <li class="match-entry">
+        <article class="match-card">
+          <button type="button" class="match-trigger" aria-expanded="false">
+            <div class="card-time">
+              <span class="card-clock"></span>
+              <span class="card-date"></span>
+            </div>
+            <div class="card-versus">
+              <div class="team-row" data-side="home">
+                <img alt="" loading="lazy" />
+                <span class="team-name"></span>
+              </div>
+              <div class="score-ribbon"></div>
+              <div class="team-row" data-side="away">
+                <img alt="" loading="lazy" />
+                <span class="team-name"></span>
+              </div>
+            </div>
+            <div class="card-meta">
+              <span class="card-status"></span>
+              <span class="card-venue"></span>
+            </div>
+          </button>
+          <div class="roster-drawer" hidden>
+            <div class="roster-columns"></div>
+          </div>
+        </article>
+      </li>
+    </template>
+
+    <template id="roster-template">
+      <article class="roster-team">
+        <header>
+          <strong class="roster-name"></strong>
+          <span class="roster-label"></span>
+        </header>
+        <ul class="roster-list"></ul>
+      </article>
+    </template>
+
+    <script type="module" src="scripts/main.js"></script>
+  </body>
+</html>
