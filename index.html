@@ -1,1 +1,72 @@
-
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LCK Archive · 경기 일정</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-brand">
+        <h1>LCK ARCHIVE</h1>
+        <p class="subtitle">2024 스프링 경기 일정 요약</p>
+      </div>
+    </header>
+    <main>
+      <section id="schedule" class="schedule">
+        <div class="section-heading">
+          <h2>경기 일정</h2>
+          <span class="season" data-season-label></span>
+        </div>
+        <ul class="match-list" aria-label="LCK 최신 경기" data-schedule>
+          <li class="match-item skeleton" aria-hidden="true">
+            <div class="match-time shimmer"></div>
+            <div class="match-content">
+              <div class="team shimmer"></div>
+              <div class="score shimmer"></div>
+              <div class="team shimmer"></div>
+            </div>
+            <div class="match-meta shimmer"></div>
+          </li>
+        </ul>
+        <template id="schedule-item-template">
+          <li class="match-item">
+            <div class="match-time">
+              <span class="date"></span>
+              <span class="time"></span>
+            </div>
+            <div class="match-content">
+              <div class="team team-home">
+                <img alt="" />
+                <span class="team-name"></span>
+              </div>
+              <div class="score"></div>
+              <div class="team team-away">
+                <img alt="" />
+                <span class="team-name"></span>
+              </div>
+            </div>
+            <div class="match-meta">
+              <span class="stage"></span>
+              <span class="venue"></span>
+              <span class="status"></span>
+            </div>
+          </li>
+        </template>
+        <noscript>
+          <p class="noscript-message">
+            자바스크립트를 활성화하면 경기 일정이 표시됩니다.
+          </p>
+        </noscript>
+      </section>
+    </main>
+    <script type="module" src="scripts/main.js"></script>
+  </body>
+</html>
