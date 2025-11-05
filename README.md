@@ -1,117 +1,87 @@
-# LCK Archive · November 2025 Match Board
+# LCK Archive · 전문가용 일정 보드
 
-11월 국제 대회 일정만 압축해 보여주는 전문가용 경기 보드입니다. 모바일에서는 상단 대회 탭, 데스크톱에서는 좌측 레일을 통해 월즈 · MSI · First Stand 섹션을 바로 전환하며, 경기 카드를 클릭하면 각 팀 로스터가 확장됩니다.
+라이엇 공식 Esports API를 사용해 LCK 분기별 스플릿과 국제 대회를 한 화면에 모아 보여주는 일정 보드입니다. Pure Black & Blue 팔레트의 와일드한 보드 스타일을 유지하면서 모바일·데스크톱 모두에서 경기만 집중적으로 탐색하도록 구성했습니다.
 
-## 구성 미리보기
-- **Pure Black + Blue 팔레트**: 방송형 대시보드에 맞춰 고대비 레이아웃으로 정리했습니다.
-- **카테고리 레일**: 모바일 상단 스와이프, 데스크톱 좌측 스티키 레일 구성.
-- **경기 카드**: 시간 / 팀 로고 / 스코어 / 상태 배지 노출, 클릭 시 로스터 트레이가 펼쳐짐.
-- **접근성 가이드**: `aria-live`, 키보드 포커스 스크롤, 토글 시 `aria-expanded` 갱신.
+## 핵심 특징
+- **API 기반 실데이터**: `getSchedule`, `getTeams` 퍼시스턴트 쿼리를 호출해 경기와 로스터를 동기화합니다. 수동으로 입력한 가짜 데이터는 사용하지 않습니다.
+- **반응형 카테고리 레일**: 데스크톱에서는 좌측 스티키 레일, 모바일에서는 상단 스크롤 탭으로 대회 섹션을 전환합니다.
+- **원클릭 로스터 토글**: 경기 카드를 클릭하면 해당 매치의 양 팀 로스터가 펼쳐집니다. API에서 제공하는 공식 팀 로고와 선수 정보를 그대로 노출합니다.
+- **상태별 퀵 스크롤**: 헤더 버튼으로 LIVE/오늘/예정 매치까지 빠르게 스크롤할 수 있습니다.
 
-## 개발 환경 준비
-- Node.js 18 이상
-- 정적 서버 (`npx serve`, `python -m http.server` 등)
-- `npm` 사용 시 [Pupix/lol-esports-api](https://github.com/Pupix/lol-esports-api) 연동을 위해 Git 접근 권한 필요
+## 2025 시즌 트래킹 범위
+| 구분 | 토너먼트 슬러그 | 기본 리그 ID | 예상 운영 기간 (한국 표준시) |
+| --- | --- | --- | --- |
+| 1분기 | `lck_2025_spring` | `98767991302996019` | 1월 초 ~ 4월 중순 |
+| 2분기 | `msi_2025` | `98767991343597634` | 5월 중순 ~ 6월 초 |
+| 3분기 | `lck_2025_summer` | `98767991310872058` | 6월 말 ~ 9월 초 |
+| 4분기 | `worlds_2025` | `98767991314006698` | 10월 초 ~ 11월 말 |
+| 프리시즌 | `lck_first_stand_2026` | `98767991302996019` | 12월 말 ~ 1월 초 |
 
-## 로컬 실행
+> 위 슬러그와 리그 ID는 2024~2025 시즌에 Riot이 사용한 명명 규칙을 기준으로 하며, 실제 값은 API 응답에서 확인됩니다. 필요 시 `tools/fetch-schedule.mjs --tournaments=<comma separated>`로 커스터마이즈하세요.
+
+## 빠른 실행
 ```bash
 npx serve .
 # 또는
 python -m http.server
 ```
-브라우저에서 `http://localhost:<port>` 접속 후 실시간 UI를 확인합니다.
+브라우저에서 `http://localhost:<port>`로 접속하면 최신 일정이 로드됩니다.
+
+## 데이터 동기화
+### 1. API 키 준비
+라이엇 Esports 공개 API 키를 확보한 뒤 환경 변수 또는 인자로 전달합니다.
+```bash
+export LOL_ESPORTS_API_KEY="<your-api-key>"
+```
+
+### 2. 스케줄 스냅샷 추출
+```bash
+node tools/fetch-schedule.mjs \
+  --hl=ko-KR \
+  --api-key="$LOL_ESPORTS_API_KEY" \
+  --tournaments=lck_2025_spring,lck_2025_summer,msi_2025,worlds_2025,lck_first_stand_2026
+```
+위 명령은 `data/schedule.json`을 생성하며, 프런트엔드는 이 파일을 우선 읽습니다. `--out`으로 출력 경로를 바꿀 수 있고 `--leagues=<id1,id2>`로 리그를 제한할 수 있습니다.
+
+### 3. 실시간 API 직접 사용 (선택)
+`scripts/config.js`에 API 키를 넣으면 프런트엔드가 직접 Riot API를 호출합니다. 보안상 키를 커밋하지 않도록 주의하세요.
+```js
+// scripts/config.js
+export const apiKey = '<your-api-key>';
+export const language = 'ko-KR';
+export const tournamentSlugs = ['lck_2025_spring', 'lck_2025_summer', 'worlds_2025', 'msi_2025', 'lck_first_stand_2026'];
+export const leagueIds = ['98767991302996019', '98767991310872058', '98767991314006698', '98767991343597634'];
+```
+키가 비어 있으면 자동으로 `data/schedule.json`을 참조합니다.
 
 ## 디렉터리 구조
 ```
 LJE/
-├── assets/logos/      # 팀 로고 SVG
-├── scripts/main.js    # 일정 렌더링 및 인터랙션
-├── styles/main.css    # Pure black & blue 테마
-├── tools/             # 외부 API 동기화 스크립트 (선택)
-└── README.md
+├── assets/logos/          # 로컬 보유 SVG (필요 시 추가)
+├── data/schedule.json     # API 스냅샷 (자동 생성)
+├── scripts/
+│   ├── config.js          # 프런트엔드용 API 설정
+│   ├── config.example.js  # 참조용 템플릿
+│   └── main.js            # 일정 렌더링 스크립트
+├── styles/main.css        # Pure Black & Blue 보드 스타일
+└── tools/fetch-schedule.mjs # Riot API 스케줄 동기화 스크립트
 ```
 
-## 데이터 구조 핵심
-`scripts/main.js`의 `tournaments` 배열이 단일 데이터 소스입니다.
+## 운영 체크리스트
+- API 키를 노출하지 않도록 `.env`, CI 시크릿 등을 활용해 `fetch-schedule.mjs`를 실행하세요.
+- `data/schedule.json`이 비어 있으면 보드에는 안내 문구만 표시됩니다.
+- 새로운 팀이 등장하면 API에서 제공하는 로고를 그대로 사용합니다. 로고가 없을 경우 팀 코드가 대신 표기됩니다.
+- LIVE 경기 진행 중에는 헤더 `LIVE` 버튼으로 즉시 해당 매치로 스크롤됩니다.
 
-| 필드 | 설명 |
+## 문제 해결
+| 이슈 | 확인 사항 |
 | --- | --- |
-| `id`, `tag`, `title`, `stage` | 대회 식별자 및 메타 정보 |
-| `matches` | 경기 배열. ISO8601(KST) `datetime`, `venue`, `stage`, `broadcast`, `status(live/completed/upcoming)` 포함 |
-| `teams` | 두 팀 정보 (`teamCatalog` 키, 선택적 `score`, 로스터 문자열 배열) |
+| 스케줄이 비어 있음 | API 키 설정 여부, 토너먼트 슬러그가 실제 응답에 존재하는지 확인하세요. |
+| 로스터가 비어 있음 | Riot API의 `getTeams`가 아직 해당 팀을 노출하지 않을 수 있습니다. `fetch-schedule.mjs --leagues=...`로 관련 리그를 명시해 보세요. |
+| 네트워크 오류 | 사내 프록시/방화벽 환경이라면 `curl`이나 `fetch`에 프록시 설정이 필요한지 점검하세요. |
 
-### 상태 규칙
-- `status: 'live'` → 헤더의 **LIVE** 버튼과 연결되어 즉시 스크롤.
-- `status: 'completed'` → `종료` 배지, 스코어가 있을 경우 `score` 필드에 병기.
-- `status: 'upcoming'` → 향후 경기. `broadcast`/`venue` 정보는 `·` 구분자로 병합해 표기.
+## 라이선스 및 출처
+- 데이터: [Riot Games Esports API](https://esports-api.lolesports.com/)
+- 참고: [Pupix/lol-esports-api](https://github.com/Pupix/lol-esports-api) (API 구조 파악용)
 
-## Pupix lol-esports-api로 일정 자동 갱신하기
-[Pupix/lol-esports-api](https://github.com/Pupix/lol-esports-api)는 라이엇 e스포츠 퍼시스턴트 API를 래핑해 주는 Node.js 라이브러리입니다. Git 소스를 직접 설치한 뒤 스케줄을 JSON으로 변환하면 본 프로젝트 데이터에 쉽게 주입할 수 있습니다.
-
-### 1. 의존성 설치
-```bash
-npm install git+https://github.com/Pupix/lol-esports-api.git
-```
-라이브러리는 Riot API 토큰을 요구하지 않지만, 요청 헤더에 `x-api-key`를 추가하고 싶은 경우 `.env` 등을 통해 주입할 수 있습니다.
-
-### 2. 동기화 스크립트 실행
-`tools/sync-schedule.mjs`는 월즈/국제 이벤트 일정을 불러와 `data/schedule.json`을 생성하는 예시입니다.
-
-```bash
-node tools/sync-schedule.mjs --hl=ko-KR --tournaments worlds,msi,first-stand
-```
-생성된 JSON을 검수한 뒤 `scripts/main.js`의 `tournaments` 배열을 덮어쓰거나, 별도 fetch 로직으로 교체하면 됩니다.
-
-### 3. 스케줄 형식
-`sync-schedule.mjs`는 아래 구조로 JSON을 출력합니다.
-
-```json
-{
-  "tournaments": [
-    {
-      "id": "worlds-2025",
-      "tag": "Worlds",
-      "title": "World Championship 2025",
-      "stage": "Knockout Stage · Seoul",
-      "matches": [
-        {
-          "id": "worlds25-sf2",
-          "datetime": "2025-11-10T19:30:00+09:00",
-          "venue": "고척 스카이돔",
-          "status": "live",
-          "stage": "Semifinal · Lower Bracket",
-          "broadcast": "Best of 5",
-          "teams": [
-            {
-              "id": "dk",
-              "score": null,
-              "roster": ["Canna · TOP", "Lucid · JGL", "ShowMaker · MID", "Deft · BOT", "BeryL · SUP"]
-            },
-            {
-              "id": "fnc",
-              "score": null,
-              "roster": ["Oscarinin · TOP", "Razork · JGL", "Humanoid · MID", "Noah · BOT", "Jun · SUP"]
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
-```
-
-## 외부 참고 소스
-| 소스 | 설명 |
-| --- | --- |
-| [Pupix/lol-esports-api](https://github.com/Pupix/lol-esports-api) | 일정/대회/로스터 데이터 수집용 Node 라이브러리 |
-| Riot Esports API | `getSchedule`, `getTournamentDetails` 퍼시스턴트 쿼리. 헤더에 `X-Riot-Token` 사용 시 속도 향상 |
-| Liquipedia MediaWiki | `action=parse&page=World_Championship_2025` 등으로 대체 로스터 검증 가능 (레이트리밋 유의) |
-| gol.gg | 경기 통계 보완용 HTML 소스 |
-
-## 배포 체크리스트
-- 데스크톱(≥1080px)에서 레일이 좌측에 고정되고 경기 카드 그리드가 균형 있게 보이는지 확인.
-- 모바일에서 대회 레일이 수평 스와이프 가능한지, 경기 카드가 단일 컬럼으로 정렬되는지 확인.
-- 라이브 경기 클릭 시 로스터 트레이가 확장되고 다른 트레이가 자동으로 닫히는지 검증.
-
-## Git 충돌 마커 점검
-병합 후 `<<<<<<<`, `=======`, `>>>>>>>` 마커가 남아 있으면 렌더링이 깨집니다. `rg "<<<<<<<" -n`으로 확인하고 모든 마커를 삭제하세요.
+> 공식 API는 레이트리밋이 있으므로 배치 실행 시 1~2초 간격을 두거나 캐싱을 병행하세요.
