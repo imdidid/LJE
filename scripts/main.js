@@ -134,7 +134,7 @@ const rosterData = [
   },
 ];
 
-const seasonLabel = '2024 Spring Split';
+const seasonLabel = 'Spring 2024';
 
 const getTemplate = (templateId) => {
   const template = document.getElementById(templateId);
