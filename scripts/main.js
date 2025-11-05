@@ -74,28 +74,17 @@ const tournaments = [
         venue: '서울 월드 아레나',
         status: 'completed',
         stage: 'Quarterfinal · Match 1',
+        broadcast: '월드 챔피언십 · 스쿼드',
         teams: [
           {
             id: 't1',
             score: 3,
-            roster: [
-              'Zeus · TOP',
-              'Oner · JGL',
-              'Faker · MID',
-              'Gumayusi · BOT',
-              'Keria · SUP'
-            ]
+            roster: ['Zeus · TOP', 'Oner · JGL', 'Faker · MID', 'Gumayusi · BOT', 'Keria · SUP']
           },
           {
             id: 'jdg',
             score: 1,
-            roster: [
-              '369 · TOP',
-              'Kanavi · JGL',
-              'Yagao · MID',
-              'Ruler · BOT',
-              'Missing · SUP'
-            ]
+            roster: ['369 · TOP', 'Kanavi · JGL', 'Yagao · MID', 'Ruler · BOT', 'Missing · SUP']
           }
         ]
       },
@@ -105,28 +94,17 @@ const tournaments = [
         venue: '서울 월드 아레나',
         status: 'completed',
         stage: 'Quarterfinal · Match 2',
+        broadcast: '월드 챔피언십 · 스쿼드',
         teams: [
           {
             id: 'geng',
             score: 2,
-            roster: [
-              'Doran · TOP',
-              'Peanut · JGL',
-              'Chovy · MID',
-              'Peyz · BOT',
-              'Delight · SUP'
-            ]
+            roster: ['Doran · TOP', 'Peanut · JGL', 'Chovy · MID', 'Peyz · BOT', 'Delight · SUP']
           },
           {
             id: 'blg',
             score: 3,
-            roster: [
-              'Bin · TOP',
-              'Xun · JGL',
-              'Knight · MID',
-              'Elk · BOT',
-              'ON · SUP'
-            ]
+            roster: ['Bin · TOP', 'Xun · JGL', 'Knight · MID', 'Elk · BOT', 'ON · SUP']
           }
         ]
       },
@@ -136,26 +114,15 @@ const tournaments = [
         venue: '고척 스카이돔',
         status: 'upcoming',
         stage: 'Semifinal · Upper Bracket',
+        broadcast: '5전 3선승제',
         teams: [
           {
             id: 't1',
-            roster: [
-              'Zeus · TOP',
-              'Oner · JGL',
-              'Faker · MID',
-              'Gumayusi · BOT',
-              'Keria · SUP'
-            ]
+            roster: ['Zeus · TOP', 'Oner · JGL', 'Faker · MID', 'Gumayusi · BOT', 'Keria · SUP']
           },
           {
             id: 'blg',
-            roster: [
-              'Bin · TOP',
-              'Xun · JGL',
-              'Knight · MID',
-              'Elk · BOT',
-              'ON · SUP'
-            ]
+            roster: ['Bin · TOP', 'Xun · JGL', 'Knight · MID', 'Elk · BOT', 'ON · SUP']
           }
         ]
       },
@@ -165,26 +132,15 @@ const tournaments = [
         venue: '고척 스카이돔',
         status: 'live',
         stage: 'Semifinal · Lower Bracket',
+        broadcast: '5전 3선승제',
         teams: [
           {
             id: 'dk',
-            roster: [
-              'Canna · TOP',
-              'Lucid · JGL',
-              'ShowMaker · MID',
-              'Deft · BOT',
-              'BeryL · SUP'
-            ]
+            roster: ['Canna · TOP', 'Lucid · JGL', 'ShowMaker · MID', 'Deft · BOT', 'BeryL · SUP']
           },
           {
             id: 'fnc',
-            roster: [
-              'Oscarinin · TOP',
-              'Razork · JGL',
-              'Humanoid · MID',
-              'Noah · BOT',
-              'Jun · SUP'
-            ]
+            roster: ['Oscarinin · TOP', 'Razork · JGL', 'Humanoid · MID', 'Noah · BOT', 'Jun · SUP']
           }
         ]
       }
@@ -202,26 +158,15 @@ const tournaments = [
         venue: '부산 e스포츠 경기장',
         status: 'upcoming',
         stage: 'Showcase Series · Match 1',
+        broadcast: 'Best of 5 · 공식 중계',
         teams: [
           {
             id: 'geng',
-            roster: [
-              'Doran · TOP',
-              'Peanut · JGL',
-              'Chovy · MID',
-              'Peyz · BOT',
-              'Delight · SUP'
-            ]
+            roster: ['Doran · TOP', 'Peanut · JGL', 'Chovy · MID', 'Peyz · BOT', 'Delight · SUP']
           },
           {
             id: 'fnc',
-            roster: [
-              'Oscarinin · TOP',
-              'Razork · JGL',
-              'Humanoid · MID',
-              'Noah · BOT',
-              'Jun · SUP'
-            ]
+            roster: ['Oscarinin · TOP', 'Razork · JGL', 'Humanoid · MID', 'Noah · BOT', 'Jun · SUP']
           }
         ]
       },
@@ -231,26 +176,15 @@ const tournaments = [
         venue: '부산 e스포츠 경기장',
         status: 'upcoming',
         stage: 'Showcase Series · Match 2',
+        broadcast: 'Best of 5 · 공식 중계',
         teams: [
           {
             id: 't1',
-            roster: [
-              'Zeus · TOP',
-              'Oner · JGL',
-              'Faker · MID',
-              'Gumayusi · BOT',
-              'Keria · SUP'
-            ]
+            roster: ['Zeus · TOP', 'Oner · JGL', 'Faker · MID', 'Gumayusi · BOT', 'Keria · SUP']
           },
           {
             id: 'nrg',
-            roster: [
-              'Dhokla · TOP',
-              'Contractz · JGL',
-              'Palafox · MID',
-              'FBI · BOT',
-              'IgNar · SUP'
-            ]
+            roster: ['Dhokla · TOP', 'Contractz · JGL', 'Palafox · MID', 'FBI · BOT', 'IgNar · SUP']
           }
         ]
       }
@@ -268,26 +202,15 @@ const tournaments = [
         venue: '롤파크',
         status: 'upcoming',
         stage: 'Opening Night',
+        broadcast: '3전 2선승 · 현장 생중계',
         teams: [
           {
             id: 'hle',
-            roster: [
-              'Kiin · TOP',
-              'Clid · JGL',
-              'Zeka · MID',
-              'Viper · BOT',
-              'Life · SUP'
-            ]
+            roster: ['Kiin · TOP', 'Clid · JGL', 'Zeka · MID', 'Viper · BOT', 'Life · SUP']
           },
           {
             id: 'kt',
-            roster: [
-              'DuDu · TOP',
-              'Pyosik · JGL',
-              'Bdd · MID',
-              'Aiming · BOT',
-              'Lehends · SUP'
-            ]
+            roster: ['DuDu · TOP', 'Pyosik · JGL', 'Bdd · MID', 'Aiming · BOT', 'Lehends · SUP']
           }
         ]
       },
@@ -297,26 +220,15 @@ const tournaments = [
         venue: '롤파크',
         status: 'upcoming',
         stage: 'Main Card',
+        broadcast: '3전 2선승 · 현장 생중계',
         teams: [
           {
             id: 'dk',
-            roster: [
-              'Canna · TOP',
-              'Lucid · JGL',
-              'ShowMaker · MID',
-              'Deft · BOT',
-              'BeryL · SUP'
-            ]
+            roster: ['Canna · TOP', 'Lucid · JGL', 'ShowMaker · MID', 'Deft · BOT', 'BeryL · SUP']
           },
           {
             id: 'ns',
-            roster: [
-              'DnDn · TOP',
-              'Sylvie · JGL',
-              'Juhl · MID',
-              'FIESTA · BOT',
-              'Peter · SUP'
-            ]
+            roster: ['DnDn · TOP', 'Sylvie · JGL', 'Juhl · MID', 'FIESTA · BOT', 'Peter · SUP']
           }
         ]
       }
@@ -326,23 +238,12 @@ const tournaments = [
 
 const boardElement = document.querySelector('[data-schedule-board]');
 const navList = document.querySelector('[data-tournament-nav]');
+const bannerElement = document.querySelector('[data-date-banner]');
+const controlButtons = document.querySelectorAll('[data-scroll]');
 
-const formatDateLabel = (isoString) => {
-  const formatter = new Intl.DateTimeFormat('ko-KR', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    timeZone: 'Asia/Seoul'
-  });
+const toDate = (value) => new Date(value);
 
-  return formatter
-    .format(new Date(isoString))
-    .replace(/\.\s/g, '.')
-    .replace(/\s/g, '')
-    .replace(/\.$/, '');
-};
-
-const formatTimeLabel = (isoString) => {
+const formatTime = (value) => {
   const formatter = new Intl.DateTimeFormat('ko-KR', {
     hour: '2-digit',
     minute: '2-digit',
@@ -350,20 +251,20 @@ const formatTimeLabel = (isoString) => {
     timeZone: 'Asia/Seoul'
   });
 
-  return formatter
-    .format(new Date(isoString))
-    .replace(/\./g, ':')
-    .replace(/:\s?/g, ':');
+  return formatter.format(toDate(value)).replace(/\./g, ':').replace(/:\s?/g, ':');
 };
 
-const formatScoreline = (teams) => {
-  const [home, away] = teams;
+const formatDate = (value) => {
+  const formatter = new Intl.DateTimeFormat('ko-KR', {
+    month: '2-digit',
+    day: '2-digit',
+    weekday: 'short',
+    timeZone: 'Asia/Seoul'
+  });
 
-  if (typeof home.score === 'number' && typeof away.score === 'number') {
-    return `${home.score} - ${away.score}`;
-  }
-
-  return 'VS';
+  const output = formatter.format(toDate(value)).replace(/\.\s/g, '.');
+  const [md, weekday] = output.split('(');
+  return `${md} · ${weekday.replace(')', '')}`;
 };
 
 const statusLabel = (status) => {
@@ -377,126 +278,171 @@ const statusLabel = (status) => {
   }
 };
 
+const scoreLabel = (teams) => {
+  const [home, away] = teams;
+  if (typeof home.score === 'number' && typeof away.score === 'number') {
+    return `${home.score} - ${away.score}`;
+  }
+  return 'VS';
+};
+
 const resolveTeam = (id) => teamCatalog[id] ?? { name: id.toUpperCase(), logo: '', region: '' };
 
-const buildRosterTeam = (matchTeam, score) => {
-  const teamInfo = resolveTeam(matchTeam.id);
-  const container = document.createElement('article');
-  container.className = 'roster-team';
-
-  const header = document.createElement('header');
-  const name = document.createElement('strong');
-  name.textContent = teamInfo.name;
-  header.appendChild(name);
-
-  const label = document.createElement('span');
-  label.className = 'team-label';
-
-  const details = [];
-  if (teamInfo.region) {
-    details.push(teamInfo.region);
-  }
-  if (typeof score === 'number') {
-    details.push(`${score}점`);
-  }
-  label.textContent = details.join(' · ');
-  header.appendChild(label);
-
-  container.appendChild(header);
-
-  const list = document.createElement('ul');
-  list.className = 'player-list';
-
-  matchTeam.roster.forEach((player) => {
-    const item = document.createElement('li');
-    item.textContent = player;
-    list.appendChild(item);
-  });
-
-  container.appendChild(list);
-  return container;
-};
-
-const collapseAll = (exclude) => {
-  document.querySelectorAll('.match-item').forEach((item) => {
-    if (exclude && item === exclude) {
-      return;
-    }
-
-    const button = item.querySelector('.match-summary');
-    const panel = item.querySelector('.roster-panel');
-
-    if (button && panel && button.getAttribute('aria-expanded') === 'true') {
-      button.setAttribute('aria-expanded', 'false');
-      panel.hidden = true;
-    }
-  });
-};
-
-const attachMatchToggle = (matchElement) => {
-  const button = matchElement.querySelector('.match-summary');
-  const panel = matchElement.querySelector('.roster-panel');
-
-  if (!button || !panel) {
+const setBannerDate = () => {
+  if (!bannerElement) {
     return;
   }
 
-  button.addEventListener('click', () => {
-    const expanded = button.getAttribute('aria-expanded') === 'true';
+  const now = new Date('2025-11-10T12:00:00+09:00');
+  const formatter = new Intl.DateTimeFormat('ko-KR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    weekday: 'long',
+    timeZone: 'Asia/Seoul'
+  });
 
-    if (expanded) {
-      button.setAttribute('aria-expanded', 'false');
-      panel.hidden = true;
+  const [datePart, weekday] = formatter
+    .format(now)
+    .replace(/\.\s/g, '.')
+    .replace(/\s/g, '')
+    .split('(');
+
+  const dayNode = bannerElement.querySelector('.banner-day');
+  const focusNode = bannerElement.querySelector('.banner-focus');
+
+  if (dayNode) {
+    dayNode.textContent = datePart ?? '2025.11.10';
+  }
+
+  if (focusNode) {
+    focusNode.textContent = `${weekday?.replace(')', '') ?? '월요일'} 주요 일정`;
+  }
+};
+
+const collapseAll = (exclude) => {
+  document.querySelectorAll('.match-card').forEach((card) => {
+    if (exclude && card === exclude) {
       return;
     }
 
-    collapseAll(matchElement);
-    button.setAttribute('aria-expanded', 'true');
-    panel.hidden = false;
-    panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const trigger = card.querySelector('.match-trigger');
+    const drawer = card.querySelector('.roster-drawer');
+
+    if (trigger && drawer && trigger.getAttribute('aria-expanded') === 'true') {
+      trigger.setAttribute('aria-expanded', 'false');
+      drawer.hidden = true;
+    }
   });
 };
 
-const populateMatch = (match, template) => {
-  const fragment = template.content.cloneNode(true);
-  const item = fragment.querySelector('.match-item');
+const buildRoster = (teams, template) => {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'roster-columns';
 
-  if (!item) {
+  teams.forEach((team) => {
+    const rosterFragment = template.content.cloneNode(true);
+    const article = rosterFragment.querySelector('.roster-team');
+
+    if (!article) {
+      return;
+    }
+
+    const info = resolveTeam(team.id);
+    const name = article.querySelector('.roster-name');
+    const label = article.querySelector('.roster-label');
+    const list = article.querySelector('.roster-list');
+
+    if (name) {
+      name.textContent = info.name;
+    }
+
+    if (label) {
+      const segments = [];
+      if (info.region) segments.push(info.region);
+      if (typeof team.score === 'number') segments.push(`${team.score}점`);
+      label.textContent = segments.join(' · ');
+    }
+
+    if (list) {
+      team.roster.forEach((player) => {
+        const li = document.createElement('li');
+        li.textContent = player;
+        list.appendChild(li);
+      });
+    }
+
+    wrapper.appendChild(rosterFragment);
+  });
+
+  return wrapper;
+};
+
+const attachToggle = (card) => {
+  const trigger = card.querySelector('.match-trigger');
+  const drawer = card.querySelector('.roster-drawer');
+
+  if (!trigger || !drawer) {
+    return;
+  }
+
+  trigger.addEventListener('click', () => {
+    const expanded = trigger.getAttribute('aria-expanded') === 'true';
+
+    if (expanded) {
+      trigger.setAttribute('aria-expanded', 'false');
+      drawer.hidden = true;
+      return;
+    }
+
+    collapseAll(card);
+    trigger.setAttribute('aria-expanded', 'true');
+    drawer.hidden = false;
+    drawer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+};
+
+const populateMatch = (match, template, rosterTemplate) => {
+  const fragment = template.content.cloneNode(true);
+  const entry = fragment.querySelector('.match-entry');
+  const card = fragment.querySelector('.match-card');
+
+  if (!entry || !card) {
     return null;
   }
 
-  const button = item.querySelector('.match-summary');
-  const dateEl = item.querySelector('.match-date');
-  const timeEl = item.querySelector('.match-time');
-  const scoreEl = item.querySelector('.scoreline');
-  const venueEl = item.querySelector('.venue');
-  const statusPill = item.querySelector('.status-pill');
-  const rosterPanel = item.querySelector('.roster-panel');
-  const rosterGrid = item.querySelector('.roster-grid');
+  const trigger = card.querySelector('.match-trigger');
+  const timeEl = card.querySelector('.card-clock');
+  const dateEl = card.querySelector('.card-date');
+  const statusEl = card.querySelector('.card-status');
+  const venueEl = card.querySelector('.card-venue');
+  const scoreEl = card.querySelector('.score-ribbon');
+  const drawer = card.querySelector('.roster-drawer');
 
-  if (button) {
-    button.dataset.matchId = match.id;
-  }
-
-  if (dateEl) {
-    dateEl.textContent = formatDateLabel(match.datetime);
+  if (trigger) {
+    trigger.dataset.matchId = match.id;
   }
 
   if (timeEl) {
-    timeEl.textContent = formatTimeLabel(match.datetime);
+    timeEl.textContent = formatTime(match.datetime);
   }
 
-  if (scoreEl) {
-    scoreEl.textContent = formatScoreline(match.teams);
+  if (dateEl) {
+    dateEl.textContent = formatDate(match.datetime);
+  }
+
+  if (statusEl) {
+    statusEl.textContent = statusLabel(match.status);
+    statusEl.dataset.status = match.status;
   }
 
   if (venueEl) {
-    venueEl.textContent = `${match.stage} · ${match.venue}`;
+    const fragments = [match.stage, match.broadcast, match.venue].filter(Boolean);
+    venueEl.textContent = fragments.join(' · ');
   }
 
-  if (statusPill) {
-    statusPill.textContent = statusLabel(match.status);
-    statusPill.dataset.status = match.status;
+  if (scoreEl) {
+    scoreEl.textContent = scoreLabel(match.teams);
   }
 
   const [homeTeam, awayTeam] = match.teams.map((team) => ({
@@ -504,20 +450,18 @@ const populateMatch = (match, template) => {
     info: resolveTeam(team.id)
   }));
 
-  const homeNode = item.querySelector('.match-team[data-side="home"]');
-  const awayNode = item.querySelector('.match-team[data-side="away"]');
+  const homeNode = card.querySelector('.team-row[data-side="home"]');
+  const awayNode = card.querySelector('.team-row[data-side="away"]');
 
   if (homeNode) {
     const img = homeNode.querySelector('img');
     const label = homeNode.querySelector('.team-name');
-
     if (img) {
       img.src = homeTeam.info.logo;
       img.alt = `${homeTeam.info.name} 로고`;
-      img.width = 40;
-      img.height = 40;
+      img.width = 42;
+      img.height = 42;
     }
-
     if (label) {
       label.textContent = homeTeam.info.name;
     }
@@ -526,96 +470,81 @@ const populateMatch = (match, template) => {
   if (awayNode) {
     const img = awayNode.querySelector('img');
     const label = awayNode.querySelector('.team-name');
-
     if (img) {
       img.src = awayTeam.info.logo;
       img.alt = `${awayTeam.info.name} 로고`;
-      img.width = 40;
-      img.height = 40;
+      img.width = 42;
+      img.height = 42;
     }
-
     if (label) {
       label.textContent = awayTeam.info.name;
     }
   }
 
-  if (rosterPanel && rosterGrid) {
-    rosterGrid.innerHTML = '';
-    rosterGrid.appendChild(buildRosterTeam(homeTeam, homeTeam.score));
-    rosterGrid.appendChild(buildRosterTeam(awayTeam, awayTeam.score));
+  if (drawer && rosterTemplate) {
+    drawer.innerHTML = '';
+    drawer.appendChild(buildRoster(match.teams, rosterTemplate));
   }
 
-  attachMatchToggle(item);
+  attachToggle(card);
   return fragment;
 };
 
-const renderMatches = (matchListElement, matches, matchTemplate) => {
-  const sorted = [...matches].sort(
-    (a, b) => new Date(a.datetime).getTime() - new Date(b.datetime).getTime()
-  );
-
-  sorted.forEach((match) => {
-    const node = populateMatch(match, matchTemplate);
-    if (node) {
-      matchListElement.appendChild(node);
-    }
-  });
+const renderMatches = (target, matches, matchTemplate, rosterTemplate) => {
+  target.innerHTML = '';
+  matches
+    .slice()
+    .sort((a, b) => toDate(a.datetime) - toDate(b.datetime))
+    .forEach((match) => {
+      const node = populateMatch(match, matchTemplate, rosterTemplate);
+      if (node) {
+        target.appendChild(node);
+      }
+    });
 };
 
-const renderTournament = (tournament, template, matchTemplate) => {
-  const fragment = template.content.cloneNode(true);
-  const section = fragment.querySelector('.tournament-section');
-
-  if (!section) {
-    return null;
-  }
-
-  section.id = tournament.id;
-
-  const tag = section.querySelector('.tournament-tag');
-  const title = section.querySelector('.tournament-title');
-  const stage = section.querySelector('.tournament-stage');
-  const list = section.querySelector('[data-match-list]');
-
-  if (tag) {
-    tag.textContent = tournament.tag;
-  }
-
-  if (title) {
-    title.textContent = tournament.title;
-  }
-
-  if (stage) {
-    stage.textContent = tournament.stage;
-  }
-
-  if (list && matchTemplate) {
-    list.innerHTML = '';
-    renderMatches(list, tournament.matches, matchTemplate);
-  }
-
-  return fragment;
-};
-
-const renderBoard = () => {
+const renderTournaments = () => {
   if (!boardElement) {
     return;
   }
 
   const tournamentTemplate = document.getElementById('tournament-template');
   const matchTemplate = document.getElementById('match-template');
+  const rosterTemplate = document.getElementById('roster-template');
 
-  if (!(tournamentTemplate instanceof HTMLTemplateElement) || !(matchTemplate instanceof HTMLTemplateElement)) {
+  if (
+    !(tournamentTemplate instanceof HTMLTemplateElement) ||
+    !(matchTemplate instanceof HTMLTemplateElement) ||
+    !(rosterTemplate instanceof HTMLTemplateElement)
+  ) {
     return;
   }
 
   boardElement.innerHTML = '';
 
   tournaments.forEach((tournament) => {
-    const node = renderTournament(tournament, tournamentTemplate, matchTemplate);
-    if (node) {
-      boardElement.appendChild(node);
+    const fragment = tournamentTemplate.content.cloneNode(true);
+    const block = fragment.querySelector('.tournament-block');
+
+    if (!block) {
+      return;
     }
+
+    block.id = tournament.id;
+    const tag = block.querySelector('.block-tag');
+    const title = block.querySelector('.block-title');
+    const stage = block.querySelector('.block-stage');
+    const list = block.querySelector('[data-match-list]');
+
+    if (tag) tag.textContent = tournament.tag;
+    if (title) title.textContent = tournament.title;
+    if (stage) stage.textContent = tournament.stage;
+
+    if (list) {
+      renderMatches(list, tournament.matches, matchTemplate, rosterTemplate);
+    }
+
+    boardElement.appendChild(fragment);
   });
 };
 
@@ -630,12 +559,12 @@ const renderNav = () => {
     const link = document.createElement('a');
     link.href = `#${tournament.id}`;
     link.textContent = tournament.tag;
-    link.className = 'nav-link';
+    link.className = 'rail-link';
     if (index === 0) {
       link.classList.add('is-active');
     }
     link.addEventListener('click', () => {
-      navList.querySelectorAll('.nav-link').forEach((anchor) => anchor.classList.remove('is-active'));
+      navList.querySelectorAll('.rail-link').forEach((anchor) => anchor.classList.remove('is-active'));
       link.classList.add('is-active');
     });
     item.appendChild(link);
@@ -644,40 +573,81 @@ const renderNav = () => {
 };
 
 const initObserver = () => {
-  const sections = document.querySelectorAll('.tournament-section');
-  if (!sections.length || !navList) {
+  if (!navList) {
     return;
   }
 
-  const anchors = Array.from(navList.querySelectorAll('.nav-link'));
-  if (!anchors.length) {
+  const anchors = Array.from(navList.querySelectorAll('.rail-link'));
+  const sections = document.querySelectorAll('.tournament-block');
+
+  if (!anchors.length || !sections.length) {
     return;
   }
 
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          anchors.forEach((anchor) => {
-            if (anchor.hash === `#${entry.target.id}`) {
-              anchor.classList.add('is-active');
-            } else {
-              anchor.classList.remove('is-active');
-            }
-          });
+        if (!entry.isIntersecting) {
+          return;
         }
+
+        anchors.forEach((anchor) => {
+          if (anchor.hash === `#${entry.target.id}`) {
+            anchor.classList.add('is-active');
+          } else {
+            anchor.classList.remove('is-active');
+          }
+        });
       });
     },
-    {
-      rootMargin: '-40% 0px -40% 0px'
-    }
+    { rootMargin: '-45% 0px -45% 0px' }
   );
 
   sections.forEach((section) => observer.observe(section));
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+const bindControls = () => {
+  const allMatches = Array.from(document.querySelectorAll('.match-card'));
+  if (!allMatches.length) {
+    return;
+  }
+
+  const todayMatch = allMatches.find((card) => {
+    const time = card.querySelector('.card-date');
+    if (!time) return false;
+    return time.textContent?.includes('11.10');
+  });
+
+  const liveMatch = allMatches.find((card) => card.querySelector('.card-status[data-status="live"]'));
+
+  const upcomingMatch = allMatches.find((card) => {
+    const status = card.querySelector('.card-status');
+    return status?.dataset.status === 'upcoming';
+  });
+
+  controlButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const mode = button.dataset.scroll;
+      if (mode === 'live' && liveMatch) {
+        liveMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        liveMatch.querySelector('.match-trigger')?.focus();
+      } else if (mode === 'upcoming' && upcomingMatch) {
+        upcomingMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        upcomingMatch.querySelector('.match-trigger')?.focus();
+      } else if (mode === 'today' && todayMatch) {
+        todayMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        todayMatch.querySelector('.match-trigger')?.focus();
+      }
+    });
+  });
+};
+
+const init = () => {
+  setBannerDate();
   renderNav();
-  renderBoard();
+  renderTournaments();
   initObserver();
-});
+  bindControls();
+};
+
+document.addEventListener('DOMContentLoaded', init);
