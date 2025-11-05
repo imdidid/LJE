@@ -1,1 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LCK Archive · 일정 보드</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <header class="masthead" aria-live="polite">
+        <div class="masthead__brand">
+          <span class="masthead__badge">LCK ARCHIVE</span>
+          <h1 class="masthead__title">분기별 스플릿 & 국제대회 경기 현황</h1>
+        </div>
+        <div class="masthead__meta" data-date-banner>
+          <span class="masthead__day">데이터 동기화 필요</span>
+          <strong class="masthead__focus">실시간 일정 로딩 대기</strong>
+        </div>
+        <div class="masthead__actions">
+          <button type="button" data-scroll="live" class="masthead__action">LIVE</button>
+          <button type="button" data-scroll="today" class="masthead__action">오늘</button>
+          <button type="button" data-scroll="upcoming" class="masthead__action">예정</button>
+        </div>
+      </header>
 
+      <main class="board">
+        <nav class="board__rail" aria-label="대회 카테고리">
+          <h2 class="rail__heading">대회</h2>
+          <ul class="rail__list" data-tournament-nav></ul>
+        </nav>
+        <section class="board__content" data-schedule-board aria-live="polite">
+          <div class="board__placeholder" data-placeholder>
+            <p>API 키를 설정하거나 `data/schedule.json`을 생성하면 최신 일정이 표시됩니다.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <template id="tournament-template">
+      <section class="tournament" data-tournament>
+        <header class="tournament__header">
+          <div class="tournament__meta">
+            <span class="tournament__tag"></span>
+            <h3 class="tournament__title"></h3>
+          </div>
+          <p class="tournament__stage"></p>
+        </header>
+        <ul class="matchlist" data-match-list></ul>
+      </section>
+    </template>
+
+    <template id="match-template">
+      <li class="match">
+        <article class="matchcard">
+          <button type="button" class="matchcard__trigger" aria-expanded="false">
+            <span class="matchcard__time">
+              <strong class="matchcard__clock"></strong>
+              <span class="matchcard__date"></span>
+            </span>
+            <span class="matchcard__teams">
+              <span class="matchcard__team" data-side="home">
+                <span class="matchcard__crest"></span>
+                <span class="matchcard__name"></span>
+              </span>
+              <span class="matchcard__score"></span>
+              <span class="matchcard__team" data-side="away">
+                <span class="matchcard__crest"></span>
+                <span class="matchcard__name"></span>
+              </span>
+            </span>
+            <span class="matchcard__meta">
+              <span class="matchcard__status"></span>
+              <span class="matchcard__details"></span>
+            </span>
+          </button>
+          <div class="matchcard__roster" hidden>
+            <div class="roster" data-roster></div>
+          </div>
+        </article>
+      </li>
+    </template>
+
+    <template id="roster-template">
+      <article class="roster__team">
+        <header>
+          <strong class="roster__name"></strong>
+          <span class="roster__note"></span>
+        </header>
+        <ul class="roster__list"></ul>
+      </article>
+    </template>
+
+    <script type="module" src="scripts/main.js"></script>
+  </body>
+</html>

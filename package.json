@@ -1,0 +1,13 @@
+{
+  "name": "lje",
+  "version": "1.0.0",
+  "description": "Riot Esports API를 통해 LCK 스플릿과 국제 대회 일정을 실시간으로 모아 보여주는 전문가용 보드",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
