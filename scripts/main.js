@@ -134,6 +134,13 @@ const rosterData = [
   },
 ];
 
+const seasonLabel = '2024 Spring Split';
+
+const getTemplate = (templateId) => {
+  const template = document.getElementById(templateId);
+  return template instanceof HTMLTemplateElement ? template : null;
+};
+
 const initNavigation = () => {
   const navLinks = document.querySelectorAll('nav a');
   const sections = document.querySelectorAll('main section');
@@ -197,6 +204,13 @@ const buildMatchLabel = (match) => {
   return `${home} 대 ${away} ${statusLabel}`;
 };
 
+const updateSeasonLabel = () => {
+  const seasonNode = document.querySelector('[data-season-label]');
+  if (seasonNode) {
+    seasonNode.textContent = seasonLabel;
+  }
+};
+
 const renderSchedule = () => {
   const container = document.querySelector('[data-schedule]');
   if (!container) return;
@@ -204,38 +218,58 @@ const renderSchedule = () => {
   const sortedMatches = [...matchFeed].sort((a, b) => parseKickoff(b.kickoff) - parseKickoff(a.kickoff));
   container.innerHTML = '';
 
+  const template = getTemplate('schedule-item-template');
+
   sortedMatches.forEach((match) => {
-    const item = document.createElement('li');
-    item.className = 'match-feed-item';
-    item.dataset.status = match.status;
+    const status = match.status ?? 'scheduled';
 
-    const timeBlock = document.createElement('div');
+    const item = template
+      ? template.content.firstElementChild.cloneNode(true)
+      : Object.assign(document.createElement('li'), { className: 'match-feed-item' });
+    item.dataset.status = status;
+    item.dataset.matchId = match.id;
+
+    const timeBlock = item.querySelector('.match-feed-time') ?? document.createElement('div');
+    const body = item.querySelector('.match-feed-body') ?? document.createElement('div');
+    const meta = item.querySelector('.match-feed-meta') ?? document.createElement('div');
+
+    const baseTeams = Array.from(body.querySelectorAll('.team'));
+    const baseScoreline = body.querySelector('.scoreline');
+
+    item.innerHTML = '';
+    item.appendChild(timeBlock);
+    item.appendChild(body);
+    item.appendChild(meta);
+
     timeBlock.className = 'match-feed-time';
+    timeBlock.dataset.kickoff = match.kickoff;
+    timeBlock.title = `${match.dateLabel} ${match.timeLabel} · ${match.stage}`;
 
-    const dateSpan = document.createElement('span');
+    const dateSpan = timeBlock.querySelector('.date') ?? timeBlock.appendChild(document.createElement('span'));
     dateSpan.className = 'date';
     dateSpan.textContent = match.dateLabel;
 
-    const timeSpan = document.createElement('span');
+    const timeSpan = timeBlock.querySelector('.time') ?? timeBlock.appendChild(document.createElement('span'));
     timeSpan.className = 'time';
     timeSpan.textContent = match.timeLabel;
 
-    timeBlock.appendChild(dateSpan);
-    timeBlock.appendChild(timeSpan);
-
-    const body = document.createElement('div');
     body.className = 'match-feed-body';
     body.setAttribute('aria-label', buildMatchLabel(match));
 
-    match.teams.forEach((team, index) => {
+    body.innerHTML = '';
+
+    const teamElements = match.teams.map((team, index) => {
       const teamInfo = teamCatalog[team.id];
-      const teamElement = document.createElement('div');
+      const teamElement = baseTeams[index] ?? document.createElement('div');
       teamElement.className = 'team';
+      teamElement.innerHTML = '';
+      teamElement.dataset.team = team.id;
 
       if (teamInfo?.logo) {
         const logo = document.createElement('img');
         logo.src = teamInfo.logo;
         logo.alt = `${teamInfo.name} 로고`;
+        logo.loading = 'lazy';
         teamElement.appendChild(logo);
       }
 
@@ -244,44 +278,48 @@ const renderSchedule = () => {
       nameSpan.textContent = teamInfo?.name ?? team.id.toUpperCase();
       teamElement.appendChild(nameSpan);
 
-      body.appendChild(teamElement);
-
-      if (index === 0) {
-        const scoreline = document.createElement('div');
-        scoreline.className = 'scoreline';
-
-        if (match.status === 'completed' && match.teams[0].score != null && match.teams[1].score != null) {
-          const homeScore = document.createElement('span');
-          homeScore.className = 'score';
-          homeScore.textContent = String(match.teams[0].score);
-
-          const divider = document.createElement('span');
-          divider.className = 'divider';
-          divider.textContent = '-';
-
-          const awayScore = document.createElement('span');
-          awayScore.className = 'score';
-          awayScore.textContent = String(match.teams[1].score);
-
-          scoreline.appendChild(homeScore);
-          scoreline.appendChild(divider);
-          scoreline.appendChild(awayScore);
-        } else {
-          scoreline.classList.add(match.status === 'upcoming' ? 'upcoming' : 'live');
-          scoreline.setAttribute('aria-hidden', 'true');
-
-          const versus = document.createElement('span');
-          versus.className = 'versus';
-          versus.textContent = match.status === 'upcoming' ? 'VS' : 'LIVE';
-          scoreline.appendChild(versus);
-        }
-
-        body.appendChild(scoreline);
-      }
+      return teamElement;
     });
 
-    const meta = document.createElement('div');
+    const scoreline = baseScoreline ?? document.createElement('div');
+    scoreline.className = 'scoreline';
+    scoreline.innerHTML = '';
+    scoreline.removeAttribute('aria-hidden');
+
+    scoreline.dataset.state = status;
+
+    if (status === 'completed' && match.teams[0].score != null && match.teams[1].score != null) {
+      ['score', 'divider', 'score'].forEach((klass, klassIndex) => {
+        const span = document.createElement('span');
+        span.className = klass;
+        if (klass === 'divider') {
+          span.textContent = '-';
+        } else {
+          span.textContent = String(match.teams[klassIndex === 0 ? 0 : 1].score);
+        }
+        scoreline.appendChild(span);
+      });
+    } else {
+      const visualStatus = status === 'scheduled' ? 'upcoming' : status;
+      scoreline.classList.add(visualStatus === 'upcoming' ? 'upcoming' : 'live');
+      scoreline.setAttribute('aria-hidden', 'true');
+
+      const versus = document.createElement('span');
+      versus.className = 'versus';
+      versus.textContent = visualStatus === 'upcoming' ? 'VS' : 'LIVE';
+      scoreline.appendChild(versus);
+    }
+
+    if (teamElements[0]) {
+      body.appendChild(teamElements[0]);
+    }
+    body.appendChild(scoreline);
+    if (teamElements[1]) {
+      body.appendChild(teamElements[1]);
+    }
+
     meta.className = 'match-feed-meta';
+    meta.innerHTML = '';
 
     const venue = document.createElement('span');
     venue.className = 'venue';
@@ -303,10 +341,6 @@ const renderSchedule = () => {
     stage.textContent = match.stage;
     meta.appendChild(stage);
 
-    item.appendChild(timeBlock);
-    item.appendChild(body);
-    item.appendChild(meta);
-
     container.appendChild(item);
   });
 };
@@ -317,36 +351,39 @@ const renderRoster = () => {
 
   container.innerHTML = '';
 
-  const cards = rosterData.map((player) => {
-    const card = document.createElement('article');
-    card.className = 'player-card';
+  const template = getTemplate('player-card-template');
+
+  const cards = rosterData.map((player, index) => {
+    const card = template
+      ? template.content.firstElementChild.cloneNode(true)
+      : Object.assign(document.createElement('article'), { className: 'player-card' });
+
     card.dataset.player = player.role.toLowerCase();
     card.dataset.open = 'false';
+    card.setAttribute('role', 'listitem');
 
-    const trigger = document.createElement('button');
+    const trigger = card.querySelector('.player-trigger') ?? card.appendChild(document.createElement('button'));
     trigger.type = 'button';
     trigger.className = 'player-trigger';
     trigger.setAttribute('aria-expanded', 'false');
 
-    const triggerContent = document.createElement('div');
+    const triggerContent = trigger.querySelector('.trigger-content') ?? trigger.appendChild(document.createElement('div'));
     triggerContent.className = 'trigger-content';
 
-    const roleSpan = document.createElement('span');
+    const roleSpan = triggerContent.querySelector('.player-role') ?? triggerContent.appendChild(document.createElement('span'));
     roleSpan.className = 'player-role';
     roleSpan.textContent = player.role;
 
-    const nameSpan = document.createElement('span');
+    const nameSpan = triggerContent.querySelector('.player-name') ?? triggerContent.appendChild(document.createElement('span'));
     nameSpan.className = 'player-name';
     nameSpan.textContent = player.name;
 
-    triggerContent.appendChild(roleSpan);
-    triggerContent.appendChild(nameSpan);
-
-    const triggerMeta = document.createElement('div');
+    const triggerMeta = trigger.querySelector('.trigger-meta') ?? trigger.appendChild(document.createElement('div'));
     triggerMeta.className = 'trigger-meta';
 
-    const playerMeta = document.createElement('div');
+    const playerMeta = triggerMeta.querySelector('.player-meta') ?? triggerMeta.appendChild(document.createElement('div'));
     playerMeta.className = 'player-meta';
+    playerMeta.innerHTML = '';
 
     if (player.badge) {
       const badge = document.createElement('span');
@@ -357,37 +394,40 @@ const renderRoster = () => {
 
     if (player.birth) {
       const birth = document.createElement('span');
+      birth.className = 'player-birth';
       birth.textContent = player.birth;
       playerMeta.appendChild(birth);
     }
 
-    triggerMeta.appendChild(playerMeta);
+    const existingChevron = triggerMeta.querySelector('.chevron');
+    if (!existingChevron) {
+      const chevron = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      chevron.setAttribute('class', 'chevron');
+      chevron.setAttribute('viewBox', '0 0 12 8');
+      chevron.setAttribute('aria-hidden', 'true');
+      chevron.setAttribute('focusable', 'false');
 
-    const chevron = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    chevron.setAttribute('class', 'chevron');
-    chevron.setAttribute('viewBox', '0 0 12 8');
-    chevron.setAttribute('aria-hidden', 'true');
-    chevron.setAttribute('focusable', 'false');
+      const chevronPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      chevronPath.setAttribute('d', 'M1 1.5 6 6.5 11 1.5');
+      chevronPath.setAttribute('stroke', 'currentColor');
+      chevronPath.setAttribute('stroke-width', '1.6');
+      chevronPath.setAttribute('stroke-linecap', 'round');
+      chevronPath.setAttribute('stroke-linejoin', 'round');
 
-    const chevronPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    chevronPath.setAttribute('d', 'M1 1.5 6 6.5 11 1.5');
-    chevronPath.setAttribute('stroke', 'currentColor');
-    chevronPath.setAttribute('stroke-width', '1.6');
-    chevronPath.setAttribute('stroke-linecap', 'round');
-    chevronPath.setAttribute('stroke-linejoin', 'round');
+      chevron.appendChild(chevronPath);
+      triggerMeta.appendChild(chevron);
+    }
 
-    chevron.appendChild(chevronPath);
-    triggerMeta.appendChild(chevron);
-
-    trigger.appendChild(triggerContent);
-    trigger.appendChild(triggerMeta);
-
-    const details = document.createElement('div');
+    const details = card.querySelector('.player-details') ?? card.appendChild(document.createElement('div'));
     details.className = 'player-details';
     details.setAttribute('hidden', '');
+    const detailsId = details.id || `player-details-${index}`;
+    details.id = detailsId;
+    trigger.setAttribute('aria-controls', detailsId);
 
-    const statsWrapper = document.createElement('div');
+    const statsWrapper = details.querySelector('.player-stats') ?? details.appendChild(document.createElement('div'));
     statsWrapper.className = 'player-stats';
+    statsWrapper.innerHTML = '';
 
     player.stats.forEach((stat) => {
       const statBlock = document.createElement('div');
@@ -404,17 +444,18 @@ const renderRoster = () => {
       statsWrapper.appendChild(statBlock);
     });
 
-    details.appendChild(statsWrapper);
-
+    let note = details.querySelector('.player-note');
     if (player.note) {
-      const note = document.createElement('p');
-      note.className = 'player-note';
+      if (!note) {
+        note = document.createElement('p');
+        note.className = 'player-note';
+        details.appendChild(note);
+      }
       note.textContent = player.note;
-      details.appendChild(note);
+    } else if (note) {
+      note.remove();
     }
 
-    card.appendChild(trigger);
-    card.appendChild(details);
     container.appendChild(card);
 
     return { card, trigger, details };
@@ -446,5 +487,6 @@ const renderRoster = () => {
 };
 
 initNavigation();
+updateSeasonLabel();
 renderSchedule();
 renderRoster();
