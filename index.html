@@ -1,1 +1,78 @@
-
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LCK Archive · 경기 일정</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <h1>LCK ARCHIVE</h1>
+        <p class="subtitle">2025년 11월 진행 중인 국제 무대 경기 일정</p>
+      </div>
+    </header>
+    <main class="layout">
+      <nav class="tournament-nav" aria-label="대회 분류">
+        <h2 class="nav-heading">TOURNAMENTS</h2>
+        <ul class="nav-list" data-tournament-nav></ul>
+      </nav>
+      <section class="schedule-board" aria-live="polite">
+        <div class="board-inner" data-schedule-board></div>
+        <noscript>
+          <p class="noscript-message">
+            자바스크립트를 활성화하면 최신 경기 일정과 로스터가 표시됩니다.
+          </p>
+        </noscript>
+      </section>
+    </main>
+    <template id="tournament-template">
+      <section class="tournament-section">
+        <header class="tournament-header">
+          <div class="tournament-meta">
+            <span class="tournament-tag"></span>
+            <h3 class="tournament-title"></h3>
+          </div>
+          <p class="tournament-stage"></p>
+        </header>
+        <ul class="match-list" data-match-list></ul>
+      </section>
+    </template>
+    <template id="match-template">
+      <li class="match-item">
+        <button class="match-summary" type="button" aria-expanded="false">
+          <div class="match-clock">
+            <span class="match-date"></span>
+            <span class="match-time"></span>
+          </div>
+          <div class="match-versus">
+            <div class="match-team" data-side="home">
+              <img alt="" loading="lazy" />
+              <span class="team-name"></span>
+            </div>
+            <span class="scoreline"></span>
+            <div class="match-team" data-side="away">
+              <img alt="" loading="lazy" />
+              <span class="team-name"></span>
+            </div>
+          </div>
+          <div class="match-flags">
+            <span class="status-pill"></span>
+            <span class="venue"></span>
+          </div>
+        </button>
+        <div class="roster-panel" hidden>
+          <div class="roster-grid"></div>
+        </div>
+      </li>
+    </template>
+    <script type="module" src="scripts/main.js"></script>
+  </body>
+</html>
